@@ -12,7 +12,7 @@ class MainMenuScene(private val myDependency: GameDependency) : Scene() {
     override suspend fun Container.sceneInit() {
         text("Test Main Menu: ${myDependency.value}")
         //NOTE: the solidRect that is not deprecated requires Double parameters for width and height
-        solidRect(100.0, 100.0, Colors.RED).position(containerRoot.width/2,containerRoot.height/2).center().onClick {
+        solidRect(100.0, 100.0, Colors.RED).position(containerRoot.width/3*2,containerRoot.height/2).center().onClick {
             launchImmediately {
                 println("Switching to game")
                 sceneDestroy()

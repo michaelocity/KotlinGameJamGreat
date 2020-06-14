@@ -5,11 +5,11 @@ import com.soywiz.korev.Key
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korma.geom.*
+import entities.projectiles.PlayerBullet
 import input.PlayerInput
 import org.jbox2d.common.Vec2
 import kotlin.math.atan2
 import kotlin.math.floor
-
 
 class Player(bm : Bitmap, private var views : Views) : Sprite(bm) {
 //    private val moveUpKey = Key.W
@@ -20,7 +20,7 @@ class Player(bm : Bitmap, private var views : Views) : Sprite(bm) {
     private val moveSpeed = 10f
     private val deceleration = 0.99f
 
-    private val velocity = Vec2()
+    val velocity = Vec2()
     private val input = Vec2()
     private val bounciness = -0.75f
     private val gunRecoil = 10
@@ -33,16 +33,19 @@ class Player(bm : Bitmap, private var views : Views) : Sprite(bm) {
         center()
         addUpdater {
             val deltaTime = it.milliseconds / 1000
-//            println("user delta time : $deltaTime")
 
             input.x = (playerInput.pressingRight().toInt() - playerInput.pressingLeft().toInt()).toFloat()
             input.y = (playerInput.pressingDown().toInt() - playerInput.pressingUp().toInt()).toFloat()
             input.normalize()
+            if(playerInput.pressingAttack()) shoot()
 
-            velocity.x += input.x * moveSpeed
-            velocity.y += input.y * moveSpeed
-            velocity.x *= deceleration
-            velocity.y *= deceleration
+//            velocity.x += input.x * moveSpeed
+//            velocity.y += input.y * moveSpeed
+//            velocity.x *= deceleration
+//            velocity.y *= deceleration
+
+            velocity.x = (velocity.x + input.x * moveSpeed) * deceleration
+            velocity.y = (velocity.y + input.y * moveSpeed) * deceleration
 
             xy(x + velocity.x * deltaTime,y + velocity.y * deltaTime)
 
@@ -52,4 +55,9 @@ class Player(bm : Bitmap, private var views : Views) : Sprite(bm) {
             rotation += rotation.shortDistanceTo(angle) * 10 * deltaTime
         }
     }
+    private fun shoot(){
+        println("player shot!")
+        //PlayerBullet(this).shootNew()
+    }
+
 }
