@@ -1,4 +1,4 @@
-package entities
+package entities.enemies
 
 import com.soywiz.klock.milliseconds
 import com.soywiz.korge.view.SpriteAnimation
@@ -6,11 +6,12 @@ import com.soywiz.korge.view.Views
 import com.soywiz.korge.view.collidesWith
 import com.soywiz.korge.view.xy
 import com.soywiz.korma.geom.*
+import entities.enemies.Enemy
 import math.Tracking
 import org.jbox2d.common.Vec2
 import kotlin.math.atan2
 
-class RotatingDefenderEnemy  (bm: SpriteAnimation, views: Views, player: Player, val health: Int = 2) : Enemy(bm, views, player, moveSpeed = 1f) {
+class RotatingDefenderEnemy  (bm: SpriteAnimation, views: Views, player: Player, health: Int = 2) : Enemy(bm, views, player, moveSpeed = 1f) {
 
     override fun updateVelocity() {
 
@@ -25,7 +26,7 @@ class RotatingDefenderEnemy  (bm: SpriteAnimation, views: Views, player: Player,
     }
 
     override fun check() {
-        if(this.collidesWith(player)){//set the image to be explosion if collided
+        if(collidesWith(player)) {//set the image to be explosion if collided
             setFrame(1)
             scale = 4.0
             playAnimation(spriteDisplayTime = 125.milliseconds)

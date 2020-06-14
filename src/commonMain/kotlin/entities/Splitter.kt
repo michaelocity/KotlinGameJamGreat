@@ -1,4 +1,4 @@
-package entities
+package entities.enemies
 
 import com.soywiz.klock.milliseconds
 import com.soywiz.korge.view.*
@@ -6,11 +6,12 @@ import com.soywiz.korma.geom.plus
 import com.soywiz.korma.geom.radians
 import com.soywiz.korma.geom.shortDistanceTo
 import com.soywiz.korma.geom.times
+import entities.enemies.Enemy
 import math.Tracking
 import org.jbox2d.common.Vec2
 import kotlin.math.atan2
 
-class Splitter(val bm: SpriteAnimation, override var views: Views, override var player: Player, val health: Int = 3) : Enemy(bm, views, player, moveSpeed = 1f) {
+class Splitter(val bm: SpriteAnimation, override var views: Views, player: Player,  health: Int = 3) : Enemy(bm, views, player, moveSpeed = 1f) {
 
     override fun updateVelocity() {
 
@@ -24,7 +25,7 @@ class Splitter(val bm: SpriteAnimation, override var views: Views, override var 
         rotation += rotation.shortDistanceTo(angle) * 10 * (dt / 1000)
     }
 
-    override fun check() {
+    override  fun check() {
         if (this.collidesWith(player)) {//set the image to be explosion if collided
             setFrame(1)
             scale = 4.0

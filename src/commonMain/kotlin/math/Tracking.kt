@@ -18,7 +18,7 @@ object Tracking {
         //creates the vector with the angle
         var movement = Vec2(target.x-position.x, target.y-position.y);
         movement.normalize()
-        println("""movement: $movement""")
+        //println("""movement: $movement""")
         return movement;
     }
 

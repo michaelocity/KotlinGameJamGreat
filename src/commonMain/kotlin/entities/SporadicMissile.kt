@@ -1,4 +1,4 @@
-package entities
+package entities.enemies
 
 import com.soywiz.klock.milliseconds
 import com.soywiz.korge.view.SpriteAnimation
@@ -6,11 +6,12 @@ import com.soywiz.korge.view.Views
 import com.soywiz.korge.view.collidesWith
 import com.soywiz.korge.view.xy
 import com.soywiz.korma.geom.*
+import entities.enemies.Enemy
 import math.Tracking
 import org.jbox2d.common.Vec2
 import kotlin.math.atan2
 
-class SporadicMissile (bm: SpriteAnimation, views: Views, player: Player, val health: Int = 2, val trackingTime : Double = 5000.0) : Enemy(bm, views, player, moveSpeed = 1f) {
+class SporadicMissile (bm: SpriteAnimation, views: Views, player: Player,  health: Int = 2, val trackingTime : Double = 5000.0) : Enemy(bm, views, player, moveSpeed = 1f) {
 
     var stillTracking = true;
     var totalTime = 0.0;
@@ -32,7 +33,7 @@ class SporadicMissile (bm: SpriteAnimation, views: Views, player: Player, val he
         rotation += rotation.shortDistanceTo(angle) * 10 * (dt / 1000)
     }
 
-    override fun check() {
+    override  fun check() {
         if(this.collidesWith(player)){//set the image to be explosion if collided
             setFrame(1)
             scale = 4.0
@@ -42,6 +43,11 @@ class SporadicMissile (bm: SpriteAnimation, views: Views, player: Player, val he
                 removeFromParent()
             }
         }
+//        if(pos.distanceTo(player.pos) > 100){
+//            println(pos.distanceTo(player.pos))
+//            render = false
+//            removeFromParent()
+//        }
     }
 
     fun trackPlayer(playerPosition: Vec2) : Unit {

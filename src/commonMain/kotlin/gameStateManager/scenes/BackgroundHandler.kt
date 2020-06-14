@@ -2,6 +2,7 @@ package gameStateManager.scenes
 
 import com.soywiz.klock.milliseconds
 import com.soywiz.korge.animate.animate
+import com.soywiz.korge.internal.KorgeUntested
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap
@@ -17,22 +18,12 @@ import com.soywiz.korio.async.launchImmediately
 import kotlinx.coroutines.GlobalScope
 import kotlin.random.Random
 
-class BackgroundHandler(private val bm : Bitmap,  val spriteSize : Int =64,  var scale :Double = 4.0){
+class BackgroundHandler(private val bm : Bitmap, private val spriteSize : Int =64, var scale :Double = 4.0){
 
-    var animations = ArrayList<Sprite>()
-    val maxBackgroundTiles =  258
+    private var animations = ArrayList<Sprite>()
+    private val maxBackgroundTiles =  258
 
-
-    fun createBackgroundTiles(container : Container) {
-        for (i in 0..container.width.toInt() step spriteSize) {
-            val background = createAnimation(Vec2(i.toFloat(), 0f))
-            background.addUpdater {
-                if (container.x > x + width)
-                    println("bruh")
-            }
-        }
-    }
-
+        @KorgeUntested
         fun updateSpritePos(playerPos : Vec2, currentScene : Container)
         {
             var relativeX = playerPos.x%spriteSize
@@ -42,41 +33,41 @@ class BackgroundHandler(private val bm : Bitmap,  val spriteSize : Int =64,  var
             {
 
                 animations.add(createAnimation(playerPos,-1,-1))
-                currentScene.addChildAt(animations.get(animations.size-1),0)
+                currentScene.addChildAt(animations[animations.size-1],0)
                 animations.add(createAnimation(playerPos,0,-1))
-                currentScene.addChildAt(animations.get(animations.size-1),0)
+                currentScene.addChildAt(animations[animations.size-1],0)
                 animations.add(createAnimation(playerPos,-1,0))
-                currentScene.addChildAt(animations.get(animations.size-1),0)
+                currentScene.addChildAt(animations[animations.size-1],0)
 
 
             }
             else if(relativeX<spriteSize/2&&relativeY>spriteSize/2)
             {
                 animations.add(createAnimation(playerPos,-1,0))
-                currentScene.addChildAt(animations.get(animations.size-1),0)
+                currentScene.addChildAt(animations[animations.size-1],0)
                 animations.add(createAnimation(playerPos,-1,1))
-                currentScene.addChildAt(animations.get(animations.size-1),0)
+                currentScene.addChildAt(animations[animations.size-1],0)
                 animations.add(createAnimation(playerPos,0,1))
-                currentScene.addChildAt(animations.get(animations.size-1),0)
+                currentScene.addChildAt(animations[animations.size-1],0)
             }
 
             else if(relativeX>spriteSize/2&&relativeY>spriteSize/2)
             {
                 animations.add(createAnimation(playerPos,1,1))
-                currentScene.addChildAt(animations.get(animations.size-1),0)
+                currentScene.addChildAt(animations[animations.size-1],0)
                 animations.add(createAnimation(playerPos,0,1))
-                currentScene.addChildAt(animations.get(animations.size-1),0)
+                currentScene.addChildAt(animations[animations.size-1],0)
                 animations.add(createAnimation(playerPos,1,0))
-                currentScene.addChildAt(animations.get(animations.size-1),0)
+                currentScene.addChildAt(animations[animations.size-1],0)
             }
             else
             {
                 animations.add(createAnimation(playerPos,1,-1))
-                currentScene.addChildAt(animations.get(animations.size-1),0)
+                currentScene.addChildAt(animations[animations.size-1],0)
                 animations.add(createAnimation(playerPos,0,-1))
-                currentScene.addChildAt(animations.get(animations.size-1),0)
+                currentScene.addChildAt(animations[animations.size-1],0)
                 animations.add(createAnimation(playerPos,1,0))
-                currentScene.addChildAt(animations.get(animations.size-1),0)
+                currentScene.addChildAt(animations[animations.size-1],0)
             }
 
             deleteUnusedTextures(currentScene)

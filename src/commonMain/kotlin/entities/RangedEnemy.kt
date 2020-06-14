@@ -1,4 +1,4 @@
-package entities
+package entities.enemies
 
 import com.soywiz.klock.milliseconds
 import com.soywiz.korge.view.SpriteAnimation
@@ -6,11 +6,12 @@ import com.soywiz.korge.view.Views
 import com.soywiz.korge.view.collidesWith
 import com.soywiz.korge.view.xy
 import com.soywiz.korma.geom.*
+import entities.enemies.Enemy
 import math.Tracking
 import org.jbox2d.common.Vec2
 import kotlin.math.atan2
 
-class RangedEnemy (bm: SpriteAnimation, views: Views, player: Player, val health: Int = 2) : Enemy(bm, views, player, moveSpeed = 1f) {
+class RangedEnemy (bm: SpriteAnimation, views: Views, player: Player, health: Int = 5) : Enemy(bm, views, player, moveSpeed = 1f) {
 
     override fun updateVelocity() {
 
@@ -36,9 +37,20 @@ class RangedEnemy (bm: SpriteAnimation, views: Views, player: Player, val health
         }
     }
 
+
+    var shootTimer = 0.0
     fun trackPlayer(playerPosition: Vec2) : Unit {
 
         velocity = Tracking.arrival(Vec2(x.toFloat(), y.toFloat()), playerPosition,moveSpeed*2).mul(moveSpeed)
 
+
+
+    }
+    
+    fun shootMissiles()
+    {
+        if (velocity.length()<1.5) {
+            SpawningManager.spawnMissile(x, y, views, player, parent)
+        }
     }
 }

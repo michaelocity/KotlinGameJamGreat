@@ -1,4 +1,4 @@
-package entities
+package entities.enemies
 
 import com.soywiz.klock.milliseconds
 import com.soywiz.korge.view.SpriteAnimation
@@ -9,15 +9,12 @@ import com.soywiz.korma.geom.plus
 import com.soywiz.korma.geom.radians
 import com.soywiz.korma.geom.shortDistanceTo
 import com.soywiz.korma.geom.times
+import entities.enemies.Enemy
 import math.Tracking
 import org.jbox2d.common.Vec2
 import kotlin.math.atan2
-import kotlin.random.Random
 
-class WanderingSpawnerEnemy (bm: SpriteAnimation, views: Views, player: Player, val health: Int = 2) : Enemy(bm, views, player, moveSpeed = 1f) {
-
-
-
+class WanderingSpawnerEnemy (bm: SpriteAnimation, views: Views, player: Player,  health: Int = 2) : Enemy(bm, views, player, moveSpeed = 1f) {
 
     override fun updateVelocity() {
 
