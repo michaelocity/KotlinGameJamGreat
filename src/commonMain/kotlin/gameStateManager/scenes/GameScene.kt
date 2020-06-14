@@ -9,11 +9,15 @@ import com.soywiz.korim.color.Colors
 import com.soywiz.korim.format.readBitmap
 import com.soywiz.korio.async.launchImmediately
 import com.soywiz.korio.file.std.resourcesVfs
+import com.soywiz.korma.geom.degrees
+import com.soywiz.korma.geom.div
 import entities.Player
 import entities.TrackingEnemy
 import gameStateManager.GameDependency
+import org.jbox2d.common.MathUtils.Companion.atan2
 import org.jbox2d.common.Vec2
-import kotlin.math.sqrt
+import kotlin.math.atan2
+import kotlin.math.round
 
 class GameScene(private val myDependency: GameDependency) : Scene() {
 
@@ -30,10 +34,37 @@ class GameScene(private val myDependency: GameDependency) : Scene() {
             }
 
         }
+
         val backgroundHandler = BackgroundHandler(resourcesVfs["animations/background/space1_4-frames.png"].readBitmap())
+        backgroundHandler.createBackgroundTiles(this)
+
+        val sprite = resourcesVfs["animations/background/space1_4-frames.png"].readBitmap()
+        for (xPos in 0..containerRoot.width.toInt() step sprite.width) {
+            for (yPos in 0..containerRoot.height.toInt()+sprite.height step sprite.height) {
+                val background = backgroundHandler.createAnimation(Vec2(xPos.toFloat(), yPos.toFloat()))
+                addChild(background)
+                background.addUpdater {
+                    if (-parent?.x!! - width > x) {
+                        x += width * 6
+                    }
+
+                    if (-parent?.x!! + containerRoot.width < x) {
+                        x -= width * 6
+                    }
 
 
-        val animation1 = Sprite(SpriteAnimation(
+                    if (-parent?.y!! > y) {
+                        y += height * 4
+                    }
+
+                    if (-parent?.y!! + containerRoot.height < y) {
+                        y -= height * 4
+                    }
+                }
+            }
+        }
+
+/*        val animation1 = Sprite(SpriteAnimation(
                 spriteMap = resourcesVfs["animations/background/space1_4-frames.png"].readBitmap(),
                 spriteWidth = backgroundHandler.spriteSize,
                 spriteHeight = backgroundHandler.spriteSize,
@@ -42,9 +73,10 @@ class GameScene(private val myDependency: GameDependency) : Scene() {
         animation1.scale(backgroundHandler.scale)
         animation1.playAnimationLooped(spriteDisplayTime = 400.milliseconds)
         animation1.center()
-        addChildAt(animation1,0)
+        addChildAt(animation1,0)*/
 
-        val player = Player(resourcesVfs["korge.png"].readBitmap(), views)
+        val player = Player(resourcesVfs["character\\pitrizzo-SpaceShip-gpl3-opengameart-96x96.png"].readBitmap(), views)
+
         //we need to center the camera on the player
         addChild(player)
         //testing enemy
@@ -56,6 +88,7 @@ class GameScene(private val myDependency: GameDependency) : Scene() {
                 rows = 1
         )
         val testTrackingEnemy = TrackingEnemy(explosionAnimation, views, player)
+        testTrackingEnemy.xy(100,100)
         addChild(testTrackingEnemy)
 
         var job = launchImmediately {
@@ -66,7 +99,7 @@ class GameScene(private val myDependency: GameDependency) : Scene() {
             }
         }
 
-
+        /*
         fun calculateVectorDistance(firstVector: Vec2, secondVec2: Vec2): Float = sqrt(
                 (firstVector.x - secondVec2.x) * (firstVector.x - secondVec2.x)
                         + (firstVector.y - secondVec2.y) * (firstVector.y - secondVec2.y))
@@ -88,11 +121,10 @@ class GameScene(private val myDependency: GameDependency) : Scene() {
                 delay(150.milliseconds)
             }
         }
+        */
 
-
-        val cameraLag = 20
+        val cameraLag = 25
         addHrUpdater {
-            val deltaTime = it.millisecondsInt / 1000
             position(-player.x + containerRoot.width / 2 + player.velocity.x / cameraLag, -player.y + containerRoot.height / 2 + player.velocity.y / cameraLag)
         }
 

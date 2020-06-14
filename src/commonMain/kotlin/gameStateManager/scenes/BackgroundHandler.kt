@@ -17,10 +17,21 @@ import com.soywiz.korio.async.launchImmediately
 import kotlinx.coroutines.GlobalScope
 import kotlin.random.Random
 
-class BackgroundHandler(private val bm : Bitmap,  val spriteSize : Int =64,  var scale :Double = 32.0){
+class BackgroundHandler(private val bm : Bitmap,  val spriteSize : Int =64,  var scale :Double = 4.0){
 
     var animations = ArrayList<Sprite>()
     val maxBackgroundTiles =  258
+
+
+    fun createBackgroundTiles(container : Container) {
+        for (i in 0..container.width.toInt() step spriteSize) {
+            val background = createAnimation(Vec2(i.toFloat(), 0f))
+            background.addUpdater {
+                if (container.x > x + width)
+                    println("bruh")
+            }
+        }
+    }
 
         fun updateSpritePos(playerPos : Vec2, currentScene : Container)
         {
@@ -84,7 +95,7 @@ class BackgroundHandler(private val bm : Bitmap,  val spriteSize : Int =64,  var
             }
         }
 
-        private fun createAnimation(playerPos: Vec2, xOffset: Int=0,yOffset :Int =0) : Sprite
+        fun createAnimation(playerPos: Vec2, xOffset: Int=0,yOffset :Int =0) : Sprite
         {
             val animation1 = Sprite(SpriteAnimation(
                     spriteMap = bm,
@@ -97,7 +108,7 @@ class BackgroundHandler(private val bm : Bitmap,  val spriteSize : Int =64,  var
             animation1.xy((playerPos.x.toInt()/(spriteSize*scale).toInt()+xOffset)*spriteSize*scale,
                     (playerPos.y.toInt()/(spriteSize*scale).toInt()+yOffset)*spriteSize*scale)
 
-            animation1.center()
+            //animation1.center()
             animation1.playAnimationLooped(spriteDisplayTime = (400*(Random.nextFloat()/2+0.75)).milliseconds)
             return animation1
         }

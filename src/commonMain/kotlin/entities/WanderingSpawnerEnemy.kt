@@ -12,8 +12,12 @@ import com.soywiz.korma.geom.times
 import math.Tracking
 import org.jbox2d.common.Vec2
 import kotlin.math.atan2
+import kotlin.random.Random
 
 class WanderingSpawnerEnemy (bm: SpriteAnimation, views: Views, player: Player, val health: Int = 2) : Enemy(bm, views, player, moveSpeed = 1f) {
+
+
+
 
     override fun updateVelocity() {
 
@@ -41,9 +45,9 @@ class WanderingSpawnerEnemy (bm: SpriteAnimation, views: Views, player: Player, 
 
     fun trackPlayer(playerPosition: Vec2) : Unit {
 
-        velocity = Tracking.arrival(Vec2(x.toFloat(), y.toFloat()), playerPosition,moveSpeed*2).mul(moveSpeed)
+        velocity = Tracking.arrival(Vec2(x.toFloat(), y.toFloat()), playerPosition,moveSpeed*2,arrivedRadius = 450).mul(moveSpeed)
 
     }
 
-    fun()
+
 }
