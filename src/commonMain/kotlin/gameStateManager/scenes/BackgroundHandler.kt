@@ -15,6 +15,7 @@ import kotlin.math.round
 import kotlin.time.seconds
 import com.soywiz.korio.async.launchImmediately
 import kotlinx.coroutines.GlobalScope
+import kotlin.random.Random
 
 class BackgroundHandler(private val bm : Bitmap,  val spriteSize : Int =64,  var scale :Double = 32.0){
 
@@ -97,7 +98,7 @@ class BackgroundHandler(private val bm : Bitmap,  val spriteSize : Int =64,  var
                     (playerPos.y.toInt()/(spriteSize*scale).toInt()+yOffset)*spriteSize*scale)
 
             animation1.center()
-            animation1.playAnimation(spriteDisplayTime = 125.milliseconds)
+            animation1.playAnimationLooped(spriteDisplayTime = (400*(Random.nextFloat()/2+0.75)).milliseconds)
             return animation1
         }
     }

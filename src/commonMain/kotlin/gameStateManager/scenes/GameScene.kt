@@ -40,7 +40,7 @@ class GameScene(private val myDependency: GameDependency) : Scene() {
                 columns = 4,
                 rows = 1))
         animation1.scale(backgroundHandler.scale)
-        animation1.playAnimation(spriteDisplayTime = 125.milliseconds)
+        animation1.playAnimationLooped(spriteDisplayTime = 400.milliseconds)
         animation1.center()
         addChildAt(animation1,0)
 

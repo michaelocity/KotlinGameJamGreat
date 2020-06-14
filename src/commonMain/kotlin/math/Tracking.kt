@@ -28,7 +28,7 @@ object Tracking {
     //the turnAmountBasedOnProbability determines whether or not the creature will have a chance to turn not the full angle ex. turnAmountBasedOnProbability = true && angleChangeScale = 0.5 that the creature can do an 50 deg change instead of 90
     //used to move the target's acceleration vector left or right to avoid obstacle
     //returns the vector rotated left or right by a certain angle
-    fun randomMoveLeftRight(movementVector: Vec2, angle : Angle = 50.degrees, leftRightProbability : Float=0f , turnAmountBasedOnProbability: Boolean = true) : Vec2 {
+    fun randomMoveLeftRight(movementVector: Vec2, angle : Angle = 90.degrees, leftRightProbability : Float=0f , turnAmountBasedOnProbability: Boolean = true) : Vec2 {
 
         //left = false, right = true;
         var leftOrRight = Random.nextFloat() + leftRightProbability >= 0.5;
@@ -115,4 +115,20 @@ object Tracking {
         val sumVector = pos1.sub(pos2)
         return sqrt(sumVector.x*sumVector.x+sumVector.y*sumVector.y)
     }
+
+
+    fun rotateVectorAroundMaster( velocityVector: Vec2,currentPos: Vec2, masterPos : Vec2, maxSpeed : Float, angle: Angle, arrivingRadius: Int= 800, arrivedRadius: Int =300, turnRight: Boolean=false) : Vec2
+    {
+        if (currentPos.sub(masterPos).length()>arrivedRadius*1.3)
+        {
+            return arrival(currentPos,masterPos,maxSpeed,arrivingRadius,arrivedRadius)
+        }
+        if(turnRight)
+        {
+            return rotateVector(velocityVector,-angle)
+        }
+        return rotateVector(velocityVector,angle)
+    }
+
+
 }
