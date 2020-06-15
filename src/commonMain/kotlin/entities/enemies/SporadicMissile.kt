@@ -13,8 +13,8 @@ import kotlin.math.atan2
 
 class SporadicMissile (bm: SpriteAnimation, views: Views, player: Player, health: Int = 2, private val trackingTime : Double = 5000.0) : Enemy(bm, views, player, moveSpeed = 1f,health = health) {
 
-    var stillTracking = true;
-    var totalTime = 0.0;
+    private var stillTracking = true;
+    private var totalTime = 0.0;
 
     override fun updateVelocity() {
 

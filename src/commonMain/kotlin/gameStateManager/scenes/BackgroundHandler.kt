@@ -26,8 +26,8 @@ class BackgroundHandler(private val bm : Bitmap, private val spriteSize : Int =6
         @KorgeUntested
         fun updateSpritePos(playerPos : Vec2, currentScene : Container)
         {
-            var relativeX = playerPos.x%spriteSize
-            var relativeY = playerPos.y%spriteSize
+            val relativeX = playerPos.x%spriteSize
+            val relativeY = playerPos.y%spriteSize
 
             if(relativeX<spriteSize/2&&relativeY<spriteSize/2)
             {

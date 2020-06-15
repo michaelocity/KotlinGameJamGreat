@@ -11,7 +11,7 @@ import org.jbox2d.common.Vec2
 
 abstract class Projectile(private var bm: SpriteAnimation, val bulletspeed: Float = 5.0f) : Sprite(bm){
     abstract fun check():          Unit
-    abstract suspend fun shootNew():       Unit
+    abstract suspend fun shootNew(deltaTime: Double):       Unit
     abstract fun updateVelocity(dt: Double): Unit
 
     protected var render = true

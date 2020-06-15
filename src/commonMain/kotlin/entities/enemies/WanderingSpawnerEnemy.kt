@@ -31,6 +31,10 @@ class WanderingSpawnerEnemy (bm: SpriteAnimation, views: Views, player: Player, 
     override fun check() {
         if(this.collidesWith(player)){//set the image to be explosion if collided
             player.health-=5
+            health = 0
+        }
+
+        if (health <= 0) {
             setFrame(1)
             scale = 4.0
             playAnimation(spriteDisplayTime = 125.milliseconds)

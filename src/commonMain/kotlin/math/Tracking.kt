@@ -3,7 +3,6 @@ package math
 import com.soywiz.korma.geom.*
 import org.jbox2d.common.MathUtils.Companion.atan2
 import org.jbox2d.common.Vec2
-import kotlin.math.acos
 import kotlin.math.min
 import kotlin.math.sqrt
 import kotlin.random.Random
@@ -16,7 +15,7 @@ object Tracking {
     fun trackingVector(position : Vec2, target : Vec2) : Vec2
     {
         //creates the vector with the angle
-        var movement = Vec2(target.x-position.x, target.y-position.y);
+        val movement = Vec2(target.x-position.x, target.y-position.y);
         movement.normalize()
         //println("""movement: $movement""")
         return movement;
@@ -83,10 +82,12 @@ object Tracking {
     // returns the rotated VELOCITY vector for the ship
     fun curvingTracking(currentPos : Vec2, target : Vec2, currentVelocityVector : Vec2, angle: Angle, maxAngle: Angle = 7.degrees) : Vec2
     {
-        var targetRelativePosition = target.sub(currentPos)
+        val targetRelativePosition = target.sub(currentPos)
         var targetAngle = atan2(targetRelativePosition.y,targetRelativePosition.x).radians
 
         //println("""target angle $targetAngle""")
+
+
         if(targetAngle< angle-maxAngle)
         {
             targetAngle = angle-maxAngle;
@@ -95,9 +96,9 @@ object Tracking {
         {
             targetAngle = maxAngle+angle;
         }
-        //println(targetAngle)
-        var normalizedVector = Vec2(cos(targetAngle).toFloat(), sin(targetAngle).toFloat())
-        return normalizedVector
+
+
+        return Vec2(cos(targetAngle).toFloat(), sin(targetAngle).toFloat())
     }
 
     fun rotateVector(vector : Vec2, angle: Angle) : Vec2

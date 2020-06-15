@@ -5,8 +5,8 @@ import com.soywiz.korma.geom.radians
 import entities.Player
 import org.jbox2d.common.Vec2
 
-abstract class Enemy(bm: SpriteAnimation, open var views: Views, var player: Player, var moveSpeed: Float = 0.05f, val deceleration: Float = 0.99f, val bounciness: Float = -0.75f, var velocity: Vec2 = Vec2(0f,0f), var health: Int) : Sprite(bm){
-    protected var render = true
+abstract class Enemy(bm: SpriteAnimation, open var views: Views, var player: Player, var moveSpeed: Float = 0.05f, val deceleration: Float = 0.99f, val bounciness: Float = -0.75f, var velocity: Vec2 = Vec2(0f,0f), var health: Int, var hitboxSize : Int = 100) : Sprite(bm){
+    var render = true
     var angle = 0.radians
 
     init {
